@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="J2ME_MODULE" version="4">
+  <component name="J2ME Module Properties">
+    <mobileApplicationType name="MIDP" />
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="com.intellij.j2meplugin.module.settings.midp.MIDPSettings">
+    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="3610" />
+    <setting name="MIDlet-Jar-URL" module.settings.user.defined.value="Oracle Pi Course.jar" />
+    <setting name="MIDlet-Name" module.settings.user.defined.value="Oracle Pi Course" />
+    <setting name="MIDlet-Vendor" module.settings.user.defined.value="JCosmo" />
+    <setting name="MIDlet-Version" module.settings.user.defined.value="1.0" />
+    <setting name="MicroEdition-Configuration" module.settings.user.defined.value="CLDC-1.8" />
+    <setting name="MicroEdition-Profile" module.settings.user.defined.value="MEEP-8.0" />
+    <jarUrl jarUrlName="$MODULE_DIR$/target/Oracle Pi Course.jar" />
+    <descriptionPath path="$MODULE_DIR$/target/Oracle Pi Course.jad" useUserDescriptor="false" />
+    <manifest useUserManifest="false" />
+  </component>
+</module>
+
