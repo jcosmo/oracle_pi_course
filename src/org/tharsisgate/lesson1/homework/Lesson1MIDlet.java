@@ -33,7 +33,7 @@ public class Lesson1MIDlet
     final OddIntervalDetector task = new OddIntervalDetector( FIVE_MINUTES );
     task.addListener( this );
     _5MinuteTimer = new Timer();
-    _5MinuteTimer.schedule( task, timeToNextMark( FIVE_MINUTES ), FIVE_MINUTES );
+    _5MinuteTimer.scheduleAtFixedRate( task, timeToNextMark( FIVE_MINUTES ), FIVE_MINUTES );
   }
 
   private long timeToNextMark( final long interval )
