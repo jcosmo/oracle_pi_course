@@ -8,20 +8,16 @@ public class Lesson1MIDlet
   extends MIDlet
   implements EventListener<OddMinuteEvent>
 {
-  private static final long FIVE_MINUTES = 1 * 5 * 1000;
-  private static final long FIVE_SECONDS = 1 * 1 * 1000;
+  private static final long FIVE_MINUTES = 10 * 1000;
+  private static final long THIRTY_SECONDS = 2 * 1000;
 
   private Timer _5MinuteTimer;
-  private Timer _5SecondTimer;
+  private Timer _30SecondTimer;
 
   @Override
   protected void startApp()
     throws MIDletStateChangeException
   {
-    System.out.println( "Kicking it off" );
-    _5MinuteTimer = new Timer();
-    _5SecondTimer = new Timer();
-
     start5MinuteTimer();
   }
 
@@ -36,8 +32,7 @@ public class Lesson1MIDlet
   {
     final OddMinuteDetector task = new OddMinuteDetector();
     task.addListener( this );
-
-    // System.out.println("Current time is " + (new Date()) + " and time to next mark is " + timeToNext5MinuteMark() );
+    _5MinuteTimer = new Timer();
     _5MinuteTimer.schedule( task, timeToNextMark( FIVE_MINUTES ), FIVE_MINUTES );
   }
 
@@ -48,15 +43,30 @@ public class Lesson1MIDlet
 
   private void stopTimers()
   {
-    _5MinuteTimer.cancel();
-    _5SecondTimer.cancel();
+    if ( null != _5MinuteTimer )
+    {
+      _5MinuteTimer.cancel();
+    }
+    if ( null != _30SecondTimer )
+    {
+      _30SecondTimer.cancel();
+    }
   }
 
   @Override
   public void eventOccurred( final OddMinuteEvent event )
   {
-    final RunXTimesTask task = new RunXTimesTask( FIVE_MINUTES / FIVE_SECONDS );
-    task.addListener( event1 -> _5SecondTimer.cancel() );
-    _5SecondTimer.schedule( task, timeToNextMark( FIVE_SECONDS ), FIVE_SECONDS );
+    final RunXTimesTask task = new RunXTimesTask( FIVE_MINUTES / THIRTY_SECONDS );
+    task.addListener( new EventListener<TaskCompletedEvent>()
+    {
+      @Override
+      public void eventOccurred( final TaskCompletedEvent event )
+      {
+        _30SecondTimer.cancel();
+        _30SecondTimer = null;
+      }
+    } );
+    _30SecondTimer = new Timer();
+    _30SecondTimer.schedule( task, 0, THIRTY_SECONDS );
   }
 }

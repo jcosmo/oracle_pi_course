@@ -1,5 +1,7 @@
 package org.tharsisgate.lesson1.homework;
 
+import java.util.Date;
+
 public class RunXTimesTask
   extends EventFiringTimerTask<TaskCompletedEvent, EventListener<TaskCompletedEvent>>
 {
@@ -10,10 +12,10 @@ public class RunXTimesTask
     _remaining = count;
   }
 
-
   @Override
   public void run()
   {
+    System.out.println( "Listening... " + new Date() );
     _remaining--;
     if ( _remaining == 0 )
     {
