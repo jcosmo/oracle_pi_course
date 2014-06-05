@@ -1,6 +1,6 @@
 package org.tharsisgate.lesson1.homework;
 
-public class OddMinuteEvent
+public class OddIntervalEvent
   implements Event
 {
 }

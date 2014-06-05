@@ -6,7 +6,7 @@ import javax.microedition.midlet.MIDletStateChangeException;
 
 public class Lesson1MIDlet
   extends MIDlet
-  implements EventListener<OddMinuteEvent>
+  implements EventListener<OddIntervalEvent>
 {
   private static final long FIVE_MINUTES = 10 * 1000;
   private static final long THIRTY_SECONDS = 2 * 1000;
@@ -30,7 +30,7 @@ public class Lesson1MIDlet
 
   private void start5MinuteTimer()
   {
-    final OddMinuteDetector task = new OddMinuteDetector();
+    final OddIntervalDetector task = new OddIntervalDetector( FIVE_MINUTES );
     task.addListener( this );
     _5MinuteTimer = new Timer();
     _5MinuteTimer.schedule( task, timeToNextMark( FIVE_MINUTES ), FIVE_MINUTES );
@@ -54,7 +54,7 @@ public class Lesson1MIDlet
   }
 
   @Override
-  public void eventOccurred( final OddMinuteEvent event )
+  public void eventOccurred( final OddIntervalEvent event )
   {
     final RunXTimesTask task = new RunXTimesTask( FIVE_MINUTES / THIRTY_SECONDS );
     task.addListener( new EventListener<TaskCompletedEvent>()
