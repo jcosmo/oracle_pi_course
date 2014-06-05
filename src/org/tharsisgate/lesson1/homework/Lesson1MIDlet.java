@@ -12,7 +12,7 @@ public class Lesson1MIDlet
   private static final long THIRTY_SECONDS = 2 * 1000;
 
   private Timer _5MinuteTimer;
-  private Timer _30SecondTimer;
+  private volatile Timer _30SecondTimer;
 
   @Override
   protected void startApp()
