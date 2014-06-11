@@ -33,7 +33,6 @@ public class ButtonAndLEDMIDlet
   @Override
   protected void startApp()
   {
-    // Open the BUTTON pin (Input)
     try
     {
       _led1 = (GPIOPin) DeviceManager.open( LED1_PIN );
