@@ -12,16 +12,22 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="com.intellij.j2meplugin.module.settings.midp.MIDPSettings">
-    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="9124" />
+    <setting name="MIDlet-1" module.settings.user.defined.value="ButtonAndLEDMidlet,,org.tharsisgate.lesson2.button_led.ButtonAndLEDMIDlet" />
+    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="20755" />
     <setting name="MIDlet-Jar-URL" module.settings.user.defined.value="Oracle Pi Course.jar" />
     <setting name="MIDlet-Name" module.settings.user.defined.value="Oracle Pi Course" />
     <setting name="MIDlet-Vendor" module.settings.user.defined.value="JCosmo" />
     <setting name="MIDlet-Version" module.settings.user.defined.value="1.0" />
     <setting name="MicroEdition-Configuration" module.settings.user.defined.value="CLDC-1.8" />
     <setting name="MicroEdition-Profile" module.settings.user.defined.value="MEEP-8.0" />
-    <jarUrl jarUrlName="$MODULE_DIR$/target/Oracle Pi Course.jar" />
-    <descriptionPath path="$MODULE_DIR$/target/Oracle Pi Course.jad" useUserDescriptor="false" />
+    <jarUrl jarUrlName="$MODULE_DIR$/resources/Oracle Pi Course.jar" />
+    <descriptionPath path="$MODULE_DIR$/resources/Oracle Pi Course.jad" useUserDescriptor="false" />
     <manifest useUserManifest="false" />
+    <userDefinedOptions>
+      <option module.settings.user.defined.key="MIDlet-Permission-2" module.settings.user.defined.value="jdk.dio.DeviceMgmtPermission &quot;*:*&quot;  &quot;open&quot;" />
+      <option module.settings.user.defined.key="MIDlet-Permission-1" module.settings.user.defined.value="jdk.dio.gpio.GPIOPortPermission &quot;*:*&quot; &quot;open&quot;" />
+      <option module.settings.user.defined.key="MIDlet-Permission-3" module.settings.user.defined.value="jdk.dio.gpio.GPIOPinPermission &quot;*:*&quot; &quot;open&quot;" />
+    </userDefinedOptions>
   </component>
 </module>
 

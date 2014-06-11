@@ -1,5 +1,5 @@
-MIDlet-1: GPIOTest, , org.tharsisgate.spike.gpio.GpioTestMIDlet
-MIDlet-Jar-Size: 17173
+MIDlet-1: ButtonAndLEDMidlet, , org.tharsisgate.lesson2.button_led.ButtonAndLEDMIDlet
+MIDlet-Jar-Size: 20755
 MIDlet-Jar-URL: Oracle Pi Course.jar
 MIDlet-Name: Oracle Pi Course
 MIDlet-Vendor: JCosmo
