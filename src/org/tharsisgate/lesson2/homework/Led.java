@@ -1,23 +1,30 @@
 package org.tharsisgate.lesson2.homework;
 
 import java.io.IOException;
+import jdk.dio.DeviceConfig;
 import jdk.dio.DeviceManager;
 import jdk.dio.gpio.GPIOPin;
+import jdk.dio.gpio.GPIOPinConfig;
 
 public class Led
 {
-  private final GPIOPin _pin;
+  private volatile GPIOPin _pin;
   private volatile Thread _blink;
 
   public Led( final int pin )
+    throws IOException
   {
-    _pin = DeviceManager.open( pin );
+    _pin = DeviceManager.open( new GPIOPinConfig( 0,
+                                                  pin, GPIOPinConfig.DIR_OUTPUT_ONLY,
+                                                  DeviceConfig.DEFAULT,
+                                                  0, false ) );
   }
 
   public void close()
   {
     try
     {
+      off();
       _pin.close();
     }
     catch ( IOException e )
@@ -63,7 +70,7 @@ public class Led
         try
         {
           _pin.setValue( true );
-          for (int i = 0; i < count * 2; i++ )
+          for ( int i = 0; i < count * 2; i++ )
           {
             Thread.sleep( duration );
             _pin.setValue( !_pin.getValue() );
@@ -75,10 +82,10 @@ public class Led
         }
         catch ( final InterruptedException e )
         {
-          e.printStackTrace();
         }
       }
-    });
+    } );
+    _blink.start();
   }
 
   private void stopBlinking()
