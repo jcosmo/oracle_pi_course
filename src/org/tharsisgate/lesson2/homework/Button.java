@@ -9,35 +9,26 @@ import jdk.dio.gpio.PinListener;
 
 public class Button
 {
-  private GPIOPin _button;
+  private final GPIOPin _button;
 
   public Button( final int port, final int pin, final int trigger )
+    throws IOException
   {
-    try
-    {
-      _button = DeviceManager.open( new GPIOPinConfig( port,
-                                                       pin, GPIOPinConfig.DIR_INPUT_ONLY,
-                                                       DeviceConfig.DEFAULT,
-                                                       trigger, false ) );
-    }
-    catch ( IOException e )
-    {
-      e.printStackTrace();
-    }
+    _button = DeviceManager.open( new GPIOPinConfig( port,
+                                                     pin, GPIOPinConfig.DIR_INPUT_ONLY,
+                                                     DeviceConfig.DEFAULT,
+                                                     trigger, false ) );
   }
 
   public void close()
   {
-    if ( null != _button )
+    try
     {
-      try
-      {
-        _button.close();
-      }
-      catch ( IOException e )
-      {
-        e.printStackTrace();
-      }
+      _button.close();
+    }
+    catch ( IOException e )
+    {
+      e.printStackTrace();
     }
   }
 
@@ -51,5 +42,10 @@ public class Button
     {
       e.printStackTrace();
     }
+  }
+
+  public GPIOPin getDevice()
+  {
+    return _button;
   }
 }

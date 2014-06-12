@@ -36,16 +36,26 @@ public class DoorAlertMidlet
   protected void startApp()
     throws MIDletStateChangeException
   {
-    _greenLed = new Led( 23 );
-    _redLed = new Led( 22 );
-    _button = new Button( 25, 0, GPIOPinConfig.TRIGGER_BOTH_EDGES );
-    _button.setInputListener( this );
+    try
+    {
+      _greenLed = new Led( 23 );
+      _redLed = new Led( 22 );
+      _button = new Button( 0, 25, GPIOPinConfig.TRIGGER_BOTH_EDGES );
+      _button.setInputListener( this );
+      _greenLed.blinkThenOn( 3, 200 );
+      _redLed.off();
+    }
+    catch ( final Exception e )
+    {
+      e.printStackTrace();
+      notifyDestroyed();
+    }
   }
 
   @Override
   public void valueChanged( final PinEvent pinEvent )
   {
-    if ( _button == pinEvent.getDevice() )
+    if ( _button.getDevice() == pinEvent.getDevice() )
     {
       if ( pinEvent.getValue() )
       {
