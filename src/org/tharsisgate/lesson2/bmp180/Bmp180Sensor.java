@@ -14,7 +14,7 @@ public class Bmp180Sensor
   private static final byte CMD_READ_TEMP = (byte) 0x2E;
   private static final byte CMD_READ_PRESSURE = (byte) 0x34;
 
-  // Calibration fields
+  // Temperature Calibration fields
   private short AC1;
   private short AC2;
   private short AC3;
@@ -42,12 +42,11 @@ public class Bmp180Sensor
   private void calibrate()
     throws IOException
   {
-    // Read all of the calibration data into a byte array
+    // Read all of the calibration data
     final int calibrationByteCount = 22;
     final ByteBuffer calibrationData = ByteBuffer.allocateDirect( calibrationByteCount );
     final int EEPROM_start = 0xAA;
-    byte[] result = readBytes( EEPROM_start, 22, calibrationData );
-    if ( null == result )
+    if ( !readBytes( EEPROM_start, 22, calibrationData ) )
     {
       throw new RuntimeException( "Unable to read calibration data" );
     }
@@ -82,10 +81,10 @@ public class Bmp180Sensor
     try
     {
       issueCommand( CMD_READ_TEMP, WAIT_TIME );
-      final byte[] rawTemp = readBytes( TEMP_REG, 2, _tempReadBuffer );
-      if ( null != rawTemp )
+      if ( readBytes( TEMP_REG, 2, _tempReadBuffer ) )
       {
         // Calculate the actual temperature
+        _tempReadBuffer.rewind();
         final int X1 = ( ( readUnsignedShort( _tempReadBuffer ) - AC6 ) * AC5 ) >> 15;
         final int X2 = ( MC << 11 ) / ( X1 + MD );
         final int B5 = X1 + X2;
@@ -103,7 +102,6 @@ public class Bmp180Sensor
   private void issueCommand( final byte command, final int waitTime )
     throws IOException
   {
-    System.out.println( "Issuing " + command );
     writeByte( CTRL_REG, command );
     try
     {

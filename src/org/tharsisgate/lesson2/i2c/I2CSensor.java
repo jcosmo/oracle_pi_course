@@ -57,7 +57,7 @@ public class I2CSensor
     _device.write( register, _registerSize, _commandBuffer );
   }
 
-  public byte[] readBytes( final int register, final int count, final ByteBuffer buffer )
+  public boolean readBytes( final int register, final int count, final ByteBuffer buffer )
     throws IOException
   {
     buffer.clear();
@@ -65,11 +65,8 @@ public class I2CSensor
     if ( result != count )
     {
       System.out.println("Failed to read " + count + " bytes.  Got " + result );
-      return null;
+      return false;
     }
-    final byte[] data = new byte[ count ];
-    buffer.rewind();
-    buffer.get( data );
-    return data;
+    return true;
   }
 }
