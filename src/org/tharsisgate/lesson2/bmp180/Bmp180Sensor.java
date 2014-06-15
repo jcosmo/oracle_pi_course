@@ -7,7 +7,7 @@ import org.tharsisgate.lesson2.i2c.I2CSensor;
 public class Bmp180Sensor
   extends I2CSensor
 {
-  private static final int WAIT_TIME = 5000;
+  private static final int WAIT_TIME = 5;
   private static final int CTRL_REG = 0xF4;
   private static final int TEMP_REG = 0xF6;
   private static final int PRESSURE_REG = 0xF8;
