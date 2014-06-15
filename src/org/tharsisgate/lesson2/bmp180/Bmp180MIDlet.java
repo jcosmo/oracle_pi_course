@@ -31,8 +31,9 @@ public class Bmp180MIDlet
         {
           final float temp = _bmp.readTemperature();
           final float pressure = _bmp.readPressure();
-          System.out.println( "temp = " + temp );
-          System.out.println( "pressure = " + pressure );
+          System.out.println( "temp = " + temp + " deg C");
+          System.out.println( "pressure = " + pressure + " pa");
+          System.out.println( "pressure = " + (pressure*0.0296) + " in. mercury" );
           try
           {
             Thread.sleep( 1000 );

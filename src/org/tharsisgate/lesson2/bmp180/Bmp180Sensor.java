@@ -7,14 +7,18 @@ import org.tharsisgate.lesson2.i2c.I2CSensor;
 public class Bmp180Sensor
   extends I2CSensor
 {
-  private static final int WAIT_TIME = 5;
   private static final int CTRL_REG = 0xF4;
   private static final int TEMP_REG = 0xF6;
-  private static final int PRESSURE_REG = 0xF8;
+  private static final int PRESSURE_REG = 0xF6;
   private static final byte CMD_READ_TEMP = (byte) 0x2E;
-  private static final byte CMD_READ_PRESSURE = (byte) 0x34;
+  private static final int TEMP_WAIT_TIME = 5;
 
-  // Temperature Calibration fields
+  // These three go together.  0x34/4.5/0  0x74/7.5/1  0xB4/13.5/2   0xF4/25.5/3
+  private static final byte CMD_READ_PRESSURE = (byte) 0x34;
+  private static final int PRESSURE_WAIT_TIME = 5;
+  private static final int PRESSURE_OSS = 0;
+
+  // Calibration fields
   private short AC1;
   private short AC2;
   private short AC3;
@@ -80,7 +84,7 @@ public class Bmp180Sensor
   {
     try
     {
-      issueCommand( CMD_READ_TEMP, WAIT_TIME );
+      issueCommand( CMD_READ_TEMP, TEMP_WAIT_TIME );
       if ( readBytes( TEMP_REG, 2, _tempReadBuffer ) )
       {
         // Calculate the actual temperature
@@ -90,6 +94,56 @@ public class Bmp180Sensor
         final int B5 = X1 + X2;
         float celsius = ( ( B5 + 8 ) >> 4 ) / 10.0f;
         return celsius;
+      }
+    }
+    catch ( final IOException e )
+    {
+      e.printStackTrace();
+    }
+    return 0;
+  }
+
+  public long readPressure()
+  {
+    try
+    {
+      issueCommand( CMD_READ_PRESSURE, PRESSURE_WAIT_TIME );
+      if ( readBytes( PRESSURE_REG, 3, _pressureReadBuffer ) )
+      {
+        // Calculate the actual temperature
+        _pressureReadBuffer.rewind();
+        byte[] data = new byte[ 3 ];
+        _pressureReadBuffer.get( data );
+        final long UP =
+          ( ( ( data[ 0 ] << 16 ) & 0xFF0000 ) + ( ( data[ 1 ] << 8 ) & 0xFF00 ) + ( data[ 2 ] & 0xFF ) ) >>
+          ( 8 - PRESSURE_OSS );
+        long X1 = ( ( ( ( ( data[ 0 ] << 8 ) & 0xFF00 ) + ( ( data[ 1 ] ) & 0xFF ) ) - AC6 ) * AC5 ) >> 15;
+        long X2 = ( MC << 11 ) / ( X1 + MD );
+        final long B5 = X1 + X2;
+        final long B6 = B5 - 4000;
+        X1 = ( B2 * (( B6 * B6 ) >> 12 )) >> 11;
+        X2 = AC2 * B6 >> 11;
+        long X3 = X1 + X2;
+        final long B3 = ( ( ( AC1 * 4 + X3 ) << PRESSURE_OSS ) + 2 ) / 4;
+        X1 = AC3 * B6 >> 13;
+        X2 = ( B1 * ( B6 * B6 >> 12 ) ) >> 16;
+        X3 = ( ( X1 + X2 ) + 2 ) >> 2;
+        final long B4 = (AC4 * ( X3 + 32768 )) >> 15;
+        final long B7 = ( UP - B3 ) * ( 50000 >> PRESSURE_OSS );
+        long p;
+        if ( B7 < 0x80000000 )
+        {
+          p = ( B7 * 2 ) / B4;
+        }
+        else
+        {
+          p = ( B7 / B4 ) * 2;
+        }
+        X1 = ( p >> 8 ) * ( p >> 8 );
+        X1 = ( X1 * 3038 ) >> 16;
+        X2 = ( -7357 * p ) >> 16;
+        p = p + ( X1 + X2 + 3791 ) >> 4;
+        return p;
       }
     }
     catch ( final IOException e )
@@ -111,10 +165,5 @@ public class Bmp180Sensor
     {
       e.printStackTrace();
     }
-  }
-
-  public float readPressure()
-  {
-    return 0;
   }
 }
