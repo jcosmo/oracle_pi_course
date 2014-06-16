@@ -107,6 +107,16 @@ public class Bmp180Sensor
   {
     try
     {
+      issueCommand( CMD_READ_TEMP, TEMP_WAIT_TIME );
+      if ( !readBytes( TEMP_REG, 2, _tempReadBuffer ) )
+      {
+        return 0;
+      }
+      _tempReadBuffer.rewind();
+      long X1 = ( ( readUnsignedShort( _tempReadBuffer ) - AC6 ) * AC5 ) >> 15;
+      long X2 = ( MC << 11 ) / ( X1 + MD );
+      long B5 = X1 + X2;
+
       issueCommand( CMD_READ_PRESSURE, PRESSURE_WAIT_TIME );
       if ( readBytes( PRESSURE_REG, 3, _pressureReadBuffer ) )
       {
@@ -117,9 +127,6 @@ public class Bmp180Sensor
         final long UP =
           ( ( ( data[ 0 ] << 16 ) & 0xFF0000 ) + ( ( data[ 1 ] << 8 ) & 0xFF00 ) + ( data[ 2 ] & 0xFF ) ) >>
           ( 8 - PRESSURE_OSS );
-        long X1 = ( ( ( ( ( data[ 0 ] << 8 ) & 0xFF00 ) + ( ( data[ 1 ] ) & 0xFF ) ) - AC6 ) * AC5 ) >> 15;
-        long X2 = ( MC << 11 ) / ( X1 + MD );
-        final long B5 = X1 + X2;
         final long B6 = B5 - 4000;
         X1 = ( B2 * (( B6 * B6 ) >> 12 )) >> 11;
         X2 = AC2 * B6 >> 11;
@@ -142,7 +149,7 @@ public class Bmp180Sensor
         X1 = ( p >> 8 ) * ( p >> 8 );
         X1 = ( X1 * 3038 ) >> 16;
         X2 = ( -7357 * p ) >> 16;
-        p = p + ( X1 + X2 + 3791 ) >> 4;
+        p = p + (( X1 + X2 + 3791 ) >> 4);
         return p;
       }
     }
