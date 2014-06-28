@@ -24,44 +24,19 @@ public class Position
     _altitude = altitude;
   }
 
-  public long getTimeStamp()
-  {
-    return _timeStamp;
-  }
-
-  public double getLatitude()
-  {
-    return _latitude;
-  }
-
-  public char getLatitudeDirection()
-  {
-    return _latitudeDirection;
-  }
-
-  public double getLongitude()
-  {
-    return _longitude;
-  }
-
-  public char getLongitudeDirection()
-  {
-    return _longitudeDirection;
-  }
-
-  public double getAltitude()
-  {
-    return _altitude;
-  }
-
   @Override
   public String toString()
   {
-    return "Position{" +
-           "time=" + _timeStamp +
-           ", lat=" + _latitude +_latitudeDirection +
-           ", long=" + _longitude + _longitudeDirection +
-           ", alt=" + _altitude +
-           '}';
+    return String.valueOf( _timeStamp ) +
+           ',' +
+           _latitude +
+           ',' +
+           _latitudeDirection +
+           ',' +
+           _longitude +
+           ',' +
+           _longitudeDirection +
+           ',' +
+           _altitude;
   }
 }

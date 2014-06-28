@@ -14,28 +14,13 @@ public class Velocity
     _speed = speed;
   }
 
-  public long getTimeStamp()
-  {
-    return _timeStamp;
-  }
-
-  public double getBearing()
-  {
-    return _bearing;
-  }
-
-  public double getSpeed()
-  {
-    return _speed;
-  }
-
   @Override
   public String toString()
   {
-    return "Velocity{" +
-           "time=" + _timeStamp +
-           ", bearing =" + _bearing +
-           ", speed=" + _speed +
-           '}';
+    return String.valueOf( _timeStamp ) +
+               ',' +
+               _speed +
+               ',' +
+               _bearing;
   }
 }
