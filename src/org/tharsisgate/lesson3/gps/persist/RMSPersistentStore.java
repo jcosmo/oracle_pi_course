@@ -51,12 +51,6 @@ public class RMSPersistentStore
     }
   }
 
-  public RecordEnumeration getRecordEnumerator()
-    throws RecordStoreNotOpenException
-  {
-    return _store.enumerateRecords(null, null, false);
-  }
-
   public String getRecordAsString( final int i )
     throws RecordStoreException
   {

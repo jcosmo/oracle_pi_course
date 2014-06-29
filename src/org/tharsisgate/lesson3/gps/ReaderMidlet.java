@@ -14,13 +14,10 @@ public class ReaderMidlet
 
     try (final RMSPersistentStore store = new RMSPersistentStore( "GpsStore" ))
     {
-      final RecordEnumeration enumerator = store.getRecordEnumerator();
-      System.out.println( "Record store contains " + enumerator.numRecords() + " records" );
-      int i = 0;
-      while (enumerator.hasNextElement())
+      System.out.println( "Record store contains " + store.getRecordCount() + " records" );
+      for ( int i = 1; i <= store.getRecordCount(); i++ )
       {
-        i++;
-        System.out.println("" + i + " : " + store.getRecordAsString( enumerator.nextRecordId() ));
+        System.out.println("" + i + " : " + store.getRecordAsString( i ));
       }
     }
     catch ( final Exception e )
