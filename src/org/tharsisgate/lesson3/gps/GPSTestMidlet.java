@@ -17,7 +17,7 @@ public class GPSTestMidlet
     System.out.println( "GPS recording Imlet starting" );
 
     // Experiment with both types of accessing the GPS device
-    try (final AdaFruitGPSUARTSensor gps = new AdaFruitGPSUARTSensor( ))
+    try (final AdaFruitGPSUARTSensor gps = new AdaFruitGPSUARTSensor())
     {
       gps.enableLogging( true );
       gps.setLogLevel( DEBUG );
