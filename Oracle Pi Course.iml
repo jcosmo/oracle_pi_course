@@ -12,7 +12,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="com.intellij.j2meplugin.module.settings.midp.MIDPSettings">
-    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="31002" />
+    <setting name="MIDlet-1" module.settings.user.defined.value="GPSRecorder,,org.tharsisgate.lesson3.gps.RecorderMidlet" />
+    <setting name="MIDlet-2" module.settings.user.defined.value="RMSReader,,org.tharsisgate.lesson3.gps.ReaderMidlet" />
+    <setting name="MIDlet-Jar-Size" module.settings.user.defined.value="45478" />
     <setting name="MIDlet-Jar-URL" module.settings.user.defined.value="Oracle Pi Course.jar" />
     <setting name="MIDlet-Name" module.settings.user.defined.value="Oracle Pi Course" />
     <setting name="MIDlet-Vendor" module.settings.user.defined.value="JCosmo" />

@@ -1,12 +1,14 @@
-MIDlet-1: DoorAlertMidlet, , org.tharsisgate.lesson2.homework.DoorAlertMidlet
-MIDlet-Jar-Size: 25172
+MIDlet-1: GPSRecorder, , org.tharsisgate.lesson3.gps.RecorderMidlet
+MIDlet-2: RMSReader, , org.tharsisgate.lesson3.gps.ReaderMidlet
+MIDlet-Jar-Size: 45478
 MIDlet-Jar-URL: Oracle Pi Course.jar
 MIDlet-Name: Oracle Pi Course
 MIDlet-Vendor: JCosmo
 MIDlet-Version: 1.0
 MicroEdition-Configuration: CLDC-1.8
 MicroEdition-Profile: MEEP-8.0
-MIDlet-Permission-2: jdk.dio.DeviceMgmtPermission "*:*"  "open"
 MIDlet-Permission-4: jdk.dio.gpio.GPIOPinPermission "*:*" "setdirection"
+MIDlet-Permission-2: jdk.dio.DeviceMgmtPermission "*:*"  "open"
 MIDlet-Permission-1: jdk.dio.gpio.GPIOPortPermission "*:*" "open"
 MIDlet-Permission-3: jdk.dio.gpio.GPIOPinPermission "*:*" "open"
+MIDlet-Permission-5: jdk.dio.i2cbus.I2CPermission "*:*"

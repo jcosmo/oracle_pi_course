@@ -2,7 +2,6 @@ package org.tharsisgate.lesson3.gps;
 
 import java.io.IOException;
 import javax.microedition.midlet.MIDlet;
-import javax.microedition.rms.RecordStoreException;
 import org.tharsisgate.lesson3.gps.persist.PersistentStore;
 import org.tharsisgate.lesson3.gps.persist.RMSPersistentStore;
 import org.tharsisgate.lesson3.gps.sensor.AdaFruitGPSUARTSensor;
@@ -20,7 +19,8 @@ public class RecorderMidlet
     System.out.println( "GPS recording Imlet starting" );
 
     // Experiment with both types of accessing the GPS device
-    try (final AdaFruitGPSUARTSensor gps = new AdaFruitGPSUARTSensor( ); final PersistentStore store = new RMSPersistentStore("GpsStore"))
+    try (final AdaFruitGPSUARTSensor gps = new AdaFruitGPSUARTSensor(); final PersistentStore store = new RMSPersistentStore(
+      "GpsStore" ))
     {
       gps.enableLogging( true );
       gps.setLogLevel( DEBUG );
@@ -28,16 +28,16 @@ public class RecorderMidlet
       /*
       As an example we'll take one reading every second for 5 readings
        */
-      for ( int i = 0; i < 5; i++ )
+      do
       {
         final Position p = gps.getPosition();
         final Velocity v = gps.getVelocity();
         store.saveData( p, v );
         System.out.println( "Saved " + store.getRecordCount() + " : Position and velocity: " + "^^" + p + "^" + v );
         Thread.sleep( 1000 );
-      }
+      } while ( true );
     }
-    catch ( final IOException  ioe )
+    catch ( final IOException ioe )
     {
       System.out.println( "Recording Midlet: IOException " + ioe.getMessage() );
       ioe.printStackTrace();

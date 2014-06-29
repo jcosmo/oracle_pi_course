@@ -1,6 +1,7 @@
 package org.tharsisgate.lesson3.gps.persist;
 
 import java.io.IOException;
+import javax.microedition.rms.RecordEnumeration;
 import javax.microedition.rms.RecordStore;
 import javax.microedition.rms.RecordStoreException;
 import javax.microedition.rms.RecordStoreNotOpenException;
@@ -44,10 +45,22 @@ public class RMSPersistentStore
     {
       return _store.getNumRecords();
     }
-    catch ( RecordStoreNotOpenException e )
+    catch ( final RecordStoreNotOpenException e )
     {
       return 0;
     }
+  }
+
+  public RecordEnumeration getRecordEnumerator()
+    throws RecordStoreNotOpenException
+  {
+    return _store.enumerateRecords(null, null, false);
+  }
+
+  public String getRecordAsString( final int i )
+    throws RecordStoreException
+  {
+    return new String( _store.getRecord( i ) );
   }
 
   @Override
